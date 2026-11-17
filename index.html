@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MPI TKA Matematika Kelas 9 — Hero & Blox Arena</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Fredoka (Gaming/Playful), Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome untuk Ikon Edukasi & Gaming -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- html2pdf.js via CDN untuk Cetak/Unduh Laporan PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Fredoka"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              500: '#06b6d4',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Styling & Animasi Cerah Tema Roblox x Mobile Legends */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f0f9ff;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    .font-game {
+      font-family: 'Fredoka', sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    .math-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Animasi Transisi Halaman */
+    .fade-in {
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Animasi Melayang untuk Karakter */
+    @keyframes floatChar {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floatChar 3s ease-in-out infinite;
+    }
+
+    /* Shake Animation untuk Validasi Form */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    /* Styling Drag & Drop */
+    .drag-item {
+      cursor: grab;
+      transition: all 0.2s ease;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    .drag-item:active {
+      cursor: grabbing;
+      transform: scale(0.97);
+    }
+    .drag-item.selected-chip {
+      border-color: #f59e0b;
+      background-color: #fef3c7;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+    }
+    .drop-zone {
+      transition: all 0.2s ease;
+      min-height: 54px;
+    }
+    .drop-zone.drag-over {
+      background-color: #fef3c7;
+      border-color: #f59e0b;
+      transform: scale(1.01);
+    }
+
+    /* Styling Khusus Cetak / PDF */
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      #report-container {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+      .page-break-inside-avoid {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-sky-100 via-amber-50/70 to-fuchsia-100/70">
+
+  <!-- ==================== TOP NAVBAR ==================== -->
+  <header class="no-print sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-2 border-sky-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-500 text-white flex items-center justify-center shadow-md shadow-orange-500/30 border-2 border-white">
+          <i class="fa-solid fa-gamepad text-lg"></i>
+        </div>
+        <div>
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-orange-600 block">Blox & Legends Quest</span>
+          <h1 class="text-sm sm:text-base font-game font-bold text-slate-800 leading-tight">TKA Matematika Kelas IX</h1>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Indikator Koneksi Database Google Sheets -->
+        <div id="db-sync-badge" class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200" title="Status koneksi database Google Sheets">
+          <span id="db-sync-dot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+          <span id="db-sync-text">Cloud Ready</span>
+        </div>
+
+        <!-- Badge Identitas Siswa (Muncul saat kuis berlangsung) -->
+        <div id="nav-student-badge" class="hidden items-center gap-2 bg-gradient-to-r from-sky-50 to-amber-50 px-3.5 py-1.5 rounded-full border-2 border-sky-200 shadow-xs">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-indigo-600 text-white text-xs font-bold flex items-center justify-center">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="text-xs">
+            <span id="nav-student-name" class="font-extrabold text-slate-800">Player</span>
+            <span class="text-slate-400 mx-1">•</span>
+            <span id="nav-student-class" class="font-extrabold text-orange-600">IX-1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ==================== 1. COVER & FORM IDENTITAS SISWA ==================== -->
+    <section id="view-cover" class="fade-in max-w-3xl mx-auto">
+      <div class="bg-white rounded-3xl shadow-xl shadow-sky-200/70 border-2 border-sky-200 overflow-hidden">
+        <!-- Banner Header Cover Cerah dengan Karakter Roblox & Mobile Legends -->
+        <div class="bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-400 p-6 sm:p-9 text-white relative overflow-hidden">
+          <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+              <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400 text-slate-900 text-xs font-extrabold tracking-wide mb-3 shadow-sm">
+                <i class="fa-solid fa-crown text-orange-700"></i> RANKED MATCH • KELAS IX
+              </span>
+              <h2 class="text-2xl sm:text-4xl font-game font-bold tracking-tight mb-2 drop-shadow-xs">
+                TKA Matematika Arena: Blox & Mythic Heroes!
+              </h2>
+              <p class="text-sky-50 text-sm sm:text-base max-w-lg leading-relaxed font-medium">
+                Taklukkan misi <strong>Bangun Ruang Sisi Datar</strong>, <strong>Teorema Pythagoras</strong>, dan <strong>Analisis Grafik</strong> bersama karakter Blox Builder & Mage Knight!
+              </p>
+            </div>
+
+            <!-- Ilustrasi Karakter SVG Roblox Style & Mobile Legends Hero Style -->
+            <div class="flex items-center gap-3 shrink-0">
+              <!-- Karakter 1: Roblox Blox Builder -->
+              <div class="animate-float bg-white/20 backdrop-blur-xs p-2.5 rounded-2xl border-2 border-white/50 text-center shadow-lg">
+                <svg class="w-20 h-24 mx-auto" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="26" y="6" width="48" height="12" rx="4" fill="#FACC15" stroke="#854D0E" stroke-width="3"/>
+                  <rect x="20" y="15" width="60" height="5" rx="2.5" fill="#EAB308" stroke="#854D0E" stroke-width="2.5"/>
+                  <rect x="30" y="20" width="40" height="34" rx="8" fill="#FDE047" stroke="#854D0E" stroke-width="3"/>
+                  <circle cx="42" cy="34" r="3" fill="#1E293B"/>
+                  <circle cx="58" cy="34" r="3" fill="#1E293B"/>
+                  <path d="M41 43 Q50 50 59 43" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+                  <rect x="24" y="56" width="52" height="36" rx="5" fill="#2563EB" stroke="#1E3A8A" stroke-width="3"/>
+                  <text x="50" y="79" text-anchor="middle" fill="#FACC15" font-weight="bold" font-size="14" font-family="sans-serif">RBLX</text>
+                  <rect x="10" y="58" width="12" height="30" rx="4" fill="#FDE047" stroke="#854D0E" stroke-width="2.5"/>
+                  <rect x="78" y="58" width="12" height="30" rx="4" fill="#FDE047" stroke="#854D0E" stroke-width="2.5"/>
+                  <rect x="27" y="94" width="20" height="20" rx="3" fill="#16A34A" stroke="#14532D" stroke-width="2.5"/>
+                  <rect x="53" y="94" width="20" height="20" rx="3" fill="#16A34A" stroke="#14532D" stroke-width="2.5"/>
+                </svg>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider bg-amber-400 text-slate-900 px-2 py-0.5 rounded-full">Blox Kid</span>
+              </div>
+
+              <!-- Karakter 2: Mobile Legends Style Mystic Mage/Knight -->
+              <div class="animate-float bg-white/20 backdrop-blur-xs p-2.5 rounded-2xl border-2 border-white/50 text-center shadow-lg" style="animation-delay: 0.7s;">
+                <svg class="w-20 h-24 mx-auto" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M25 38 L32 14 L44 24 L50 10 L56 24 L68 14 L75 38 Z" fill="#F43F5E" stroke="#881337" stroke-width="2.5"/>
+                  <polygon points="50,6 55,15 45,15" fill="#38BDF8"/>
+                  <path d="M32 32 Q50 28 68 32 L65 54 Q50 64 35 54 Z" fill="#FED7AA" stroke="#9A3412" stroke-width="2.5"/>
+                  <ellipse cx="42" cy="43" rx="3.5" ry="4.5" fill="#0284C7"/>
+                  <ellipse cx="58" cy="43" rx="3.5" ry="4.5" fill="#0284C7"/>
+                  <circle cx="43" cy="41.5" r="1.2" fill="white"/>
+                  <circle cx="59" cy="41.5" r="1.2" fill="white"/>
+                  <path d="M45 52 Q50 56 55 52" stroke="#9A3412" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M24 64 L76 64 L70 98 L30 98 Z" fill="#7C3AED" stroke="#4C1D95" stroke-width="3"/>
+                  <polygon points="50,68 58,80 50,92 42,80" fill="#FACC15" stroke="#854D0E" stroke-width="2"/>
+                  <line x1="84" y1="22" x2="84" y2="105" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
+                  <polygon points="84,10 92,24 84,34 76,24" fill="#38BDF8" stroke="#0369A1" stroke-width="2"/>
+                </svg>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider bg-rose-500 text-white px-2 py-0.5 rounded-full">Mythic Hero</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body Cover & Form Identitas -->
+        <div class="p-6 sm:p-9">
+          <!-- Info Kisi-kisi Singkat Cerah -->
+          <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-8">
+            <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-3 sm:p-4 text-center">
+              <div class="text-amber-600 text-lg sm:text-xl font-game font-bold">10 Misi</div>
+              <div class="text-xs text-slate-600 font-semibold mt-0.5">PG & Drag-Drop</div>
+            </div>
+            <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3 sm:p-4 text-center">
+              <div class="text-emerald-600 text-lg sm:text-xl font-game font-bold">100 EXP</div>
+              <div class="text-xs text-slate-600 font-semibold mt-0.5">Skor Maksimal</div>
+            </div>
+            <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-3 sm:p-4 text-center">
+              <div class="text-sky-600 text-lg sm:text-xl font-game font-bold">Rapor PDF</div>
+              <div class="text-xs text-slate-600 font-semibold mt-0.5">Auto Sync Sheets</div>
+            </div>
+          </div>
+
+          <!-- Form Input Identitas Siswa -->
+          <form id="student-form" novalidate class="space-y-5">
+            <div class="border-b-2 border-slate-100 pb-2">
+              <h3 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-id-badge text-sky-500 text-lg"></i> Registrasi Identitas Player (Siswa)
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Nama & Kelas wajib diisi agar tercetak resmi di Laporan Hasil Belajar PDF & terekam di Rekap Guru.</p>
+            </div>
+
+            <!-- Toast / Inline Error Alert (Pengganti alert() browser) -->
+            <div id="form-error-box" class="hidden items-start gap-3 p-4 rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-700 text-sm">
+              <i class="fa-solid fa-circle-exclamation mt-0.5 text-rose-600 text-base"></i>
+              <div>
+                <p class="font-extrabold">Lengkapi Data Player Dulu Ya!</p>
+                <p id="form-error-message" class="text-xs mt-0.5 text-rose-600 font-medium">Silakan masukkan nama lengkap dan pilih kelas Anda terlebih dahulu.</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <!-- Input Nama Lengkap -->
+              <div class="sm:col-span-2">
+                <label for="input-fullname" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                  Nama Lengkap Siswa <span class="text-rose-500">*</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-sky-500">
+                    <i class="fa-solid fa-user-astronaut"></i>
+                  </span>
+                  <input 
+                    type="text" 
+                    id="input-fullname" 
+                    placeholder="Contoh: Rafa Alfarizi" 
+                    autocomplete="off"
+                    class="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-slate-200 bg-slate-50/50 focus:bg-white text-slate-800 font-semibold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-500 transition"
+                  />
+                </div>
+                <p id="err-name" class="hidden text-xs font-bold text-rose-600 mt-1.5 flex items-center gap-1">
+                  <i class="fa-solid fa-triangle-exclamation"></i> Nama lengkap minimal 3 karakter huruf.
+                </p>
+              </div>
+
+              <!-- Input Kelas (IX-1 sampai IX-4) -->
+              <div>
+                <label for="input-class" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                  Kelas <span class="text-rose-500">*</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-amber-500 pointer-events-none">
+                    <i class="fa-solid fa-users-rectangle"></i>
+                  </span>
+                  <select 
+                    id="input-class" 
+                    class="w-full pl-10 pr-8 py-3 rounded-xl border-2 border-slate-200 bg-slate-50/50 focus:bg-white text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-500 transition appearance-none cursor-pointer"
+                  >
+                    <option value="">-- Pilih Kelas --</option>
+                    <option value="IX-1">Kelas IX-1</option>
+                    <option value="IX-2">Kelas IX-2</option>
+                    <option value="IX-3">Kelas IX-3</option>
+                    <option value="IX-4">Kelas IX-4</option>
+                  </select>
+                  <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 pointer-events-none">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </div>
+                <p id="err-class" class="hidden text-xs font-bold text-rose-600 mt-1.5 flex items-center gap-1">
+                  <i class="fa-solid fa-triangle-exclamation"></i> Wajib memilih kelas.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-3">
+              <button 
+                type="submit" 
+                class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 active:scale-[0.99] text-white font-game font-bold text-lg shadow-lg shadow-orange-500/30 transition flex items-center justify-center gap-3 cursor-pointer"
+              >
+                <i class="fa-solid fa-play"></i>
+                <span>START BATTLE — MULAI TKA!</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. AREA KUIS INTERAKTIF (PG & DRAG-DROP) ==================== -->
+    <section id="view-quiz" class="hidden fade-in">
+      <!-- Progress Bar & Navigasi Nomor -->
+      <div class="bg-white rounded-3xl p-4 sm:p-5 shadow-md shadow-sky-100 border-2 border-sky-200 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span id="q-category-badge" class="px-3.5 py-1 rounded-full text-xs font-extrabold bg-sky-100 text-sky-800 border border-sky-200">
+              Teorema Pythagoras
+            </span>
+            <span id="q-type-badge" class="px-3.5 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
+              Pilihan Ganda
+            </span>
+          </div>
+          <div class="text-xs sm:text-sm font-extrabold text-slate-700 bg-slate-100 px-3 py-1 rounded-full">
+            Stage <span id="q-current-num" class="text-orange-600 text-base">1</span> / <span id="q-total-num">10</span>
+          </div>
+        </div>
+
+        <!-- Bar Kemajuan Cerah -->
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden mb-4 p-0.5 border border-slate-200">
+          <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-sky-400 via-emerald-400 to-amber-400 rounded-full transition-all duration-300" style="width: 10%;"></div>
+        </div>
+
+        <!-- Grid Nomor Soal Cepat -->
+        <div id="question-pills" class="flex flex-wrap gap-1.5 sm:gap-2">
+          <!-- Diisi via JS -->
+        </div>
+      </div>
+
+      <!-- Kartu Konten Soal -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-sky-100/80 border-2 border-sky-200 mb-6 relative overflow-hidden">
+        <!-- Badge Karakter Companion di Pojok Soal -->
+        <div class="flex items-center justify-between mb-3">
+          <div class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-sky-600 bg-sky-50 px-3 py-1 rounded-lg border border-sky-100">
+            <i class="fa-solid fa-scroll"></i> Misi Pertanyaan:
+          </div>
+          <div id="q-companion-badge" class="text-xs font-bold text-slate-500 flex items-center gap-1.5">
+            <!-- Diisi dinamis icon Blox atau Hero -->
+          </div>
+        </div>
+
+        <!-- Teks Pertanyaan -->
+        <div class="mb-5">
+          <div id="q-prompt" class="text-base sm:text-lg font-bold text-slate-800 leading-relaxed">
+            <!-- Teks soal dirender di sini -->
+          </div>
+          <!-- Ilustrasi SVG Grafik / Diagram Batang / Bangun Ruang bila ada -->
+          <div id="q-visual" class="mt-4 hidden"></div>
+        </div>
+
+        <!-- Container Jawaban Dinamis (Multiple Choice ATAU Drag & Drop) -->
+        <div id="q-interaction-area" class="mt-6">
+          <!-- Dirender secara dinamis berdasarkan tipe soal -->
+        </div>
+      </div>
+
+      <!-- Tombol Navigasi Bawah -->
+      <div class="flex items-center justify-between gap-4">
+        <button 
+          id="btn-prev" 
+          type="button"
+          class="px-5 py-3 rounded-2xl bg-white hover:bg-sky-50 text-slate-700 font-extrabold text-sm border-2 border-slate-200 shadow-sm transition flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+          <span>Sebelumnya</span>
+        </button>
+
+        <div class="flex items-center gap-3">
+          <button 
+            id="btn-next" 
+            type="button"
+            class="px-6 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-sm shadow-md shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer"
+          >
+            <span>Lanjut Stage</span>
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <button 
+            id="btn-finish" 
+            type="button"
+            class="hidden px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-sm shadow-md shadow-emerald-500/30 transition flex items-center gap-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-trophy"></i>
+            <span>Victory! Lihat Rapor</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Konfirmasi Selesai (Custom Modal tanpa window.confirm) -->
+      <div id="confirm-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border-2 border-amber-300 fade-in">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4 border border-amber-200">
+            <i class="fa-solid fa-trophy"></i>
+          </div>
+          <h3 class="text-xl font-game font-bold text-slate-800 mb-2">Selesaikan Misi & Klaim Rapor?</h3>
+          <p id="confirm-modal-desc" class="text-sm text-slate-600 leading-relaxed mb-6">
+            Pastikan semua jawaban sudah diperiksa dengan teliti. Setelah dikumpulkan, sistem akan langsung menyimpan nilai ke Google Sheets dan menyusun Laporan Hasil Belajar PDF Anda.
+          </p>
+          <div class="flex items-center justify-end gap-3">
+            <button id="btn-cancel-submit" type="button" class="px-4 py-2.5 rounded-xl border-2 border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 transition cursor-pointer">
+              Cek Ulang
+            </button>
+            <button id="btn-confirm-submit" type="button" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold text-sm shadow-md transition cursor-pointer">
+              Kumpulkan Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. LAPORAN HASIL BELAJAR & CETAK PDF ==================== -->
+    <section id="view-report" class="hidden fade-in">
+      <!-- Banner Status Pengiriman ke Google Sheets -->
+      <div id="sheets-save-banner" class="no-print mb-4 p-4 rounded-2xl bg-sky-50 border-2 border-sky-200 text-sky-800 text-xs sm:text-sm font-bold flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <i id="sheets-save-icon" class="fa-solid fa-circle-notch fa-spin text-sky-600 text-base"></i>
+          <span id="sheets-save-text">Mengirim hasil pengerjaan ke Database Guru (Google Sheets)...</span>
+        </div>
+        <button id="btn-retry-sync" type="button" class="hidden px-3 py-1 rounded-lg bg-sky-600 text-white text-xs font-extrabold hover:bg-sky-700 cursor-pointer">
+          Kirim Ulang
+        </button>
+      </div>
+
+      <!-- Toolbar Aksi Atas (Tidak ikut tercetak) -->
+      <div class="no-print flex flex-wrap items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-3xl shadow-md border-2 border-emerald-200 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white flex items-center justify-center shadow-sm">
+            <i class="fa-solid fa-medal text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-game font-bold text-slate-800">Misi Selesai — Rapor Siap!</h3>
+            <p class="text-xs text-slate-500 font-medium">Unduh atau cetak Laporan Hasil Belajar Anda dalam format PDF.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button 
+            id="btn-retry" 
+            type="button"
+            class="px-4 py-2.5 rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition flex items-center gap-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Main Lagi</span>
+          </button>
+          <button 
+            id="btn-download-pdf" 
+            type="button"
+            class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>Unduh / Cetak Laporan PDF</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Notifikasi Status PDF -->
+      <div id="pdf-status-toast" class="no-print hidden mb-4 p-3.5 rounded-2xl bg-sky-50 border-2 border-sky-200 text-sky-800 text-xs font-bold flex items-center gap-2">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <span id="pdf-status-text">Sedang memproses dokumen PDF...</span>
+      </div>
+
+      <!-- DOKUMEN RAPOR YANG AKAN DI-EXPORT KE PDF -->
+      <div id="report-container" class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl shadow-sky-100 border-2 border-sky-200">
+        <!-- Kop Laporan Resmi -->
+        <div class="border-b-2 border-slate-800 pb-5 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="text-xs font-extrabold uppercase tracking-widest text-sky-600">Laporan Hasil Belajar (Evaluasi Digital)</div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">TES KEMAMPUAN AKADEMIK (TKA) MATEMATIKA</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Jenjang SMP/MTs • Kelas IX • Kurikulum Merdeka</p>
+          </div>
+          <div class="sm:text-right">
+            <span class="inline-block px-3 py-1 rounded-lg bg-amber-100 text-amber-900 font-mono text-xs font-bold border border-amber-300">
+              ID: <span id="rep-doc-id">TKA-2026-001</span>
+            </span>
+            <div id="rep-date" class="text-xs text-slate-500 mt-1 font-medium">Tanggal: -</div>
+          </div>
+        </div>
+
+        <!-- Identitas Siswa & Kartu Skor Utama -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+          <!-- Kolom Biodata -->
+          <div class="md:col-span-2 bg-sky-50/60 rounded-2xl p-5 border border-sky-200 flex flex-col justify-center">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-sky-700 mb-3">Identitas Peserta Didik</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div>
+                <span class="text-slate-500 block text-xs">Nama Lengkap:</span>
+                <span id="rep-name" class="font-extrabold text-slate-900 text-base">-</span>
+              </div>
+              <div>
+                <span class="text-slate-500 block text-xs">Kelas / Rombel:</span>
+                <span id="rep-class" class="font-extrabold text-sky-700 text-base">-</span>
+              </div>
+              <div>
+                <span class="text-slate-500 block text-xs">Jumlah Soal Dijawab:</span>
+                <span id="rep-answered" class="font-bold text-slate-800">10 / 10 Soal</span>
+              </div>
+              <div>
+                <span class="text-slate-500 block text-xs">Rank / Predikat Capaian:</span>
+                <span id="rep-predicate" class="inline-block px-2.5 py-0.5 rounded-md text-xs font-extrabold bg-emerald-100 text-emerald-800 mt-0.5">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kolom Skor Akhir -->
+          <div class="bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 text-white rounded-2xl p-5 flex flex-col items-center justify-center text-center shadow-md">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-amber-100">Nilai Akhir TKA</span>
+            <div id="rep-score" class="text-5xl font-extrabold my-1 tracking-tight">0</div>
+            <div class="text-xs text-white font-semibold">
+              Benar <span id="rep-correct-count" class="font-extrabold underline">0</span> dari 10 Soal
+            </div>
+          </div>
+        </div>
+
+        <!-- Analisis Penguasaan Kompetensi per Topik -->
+        <div class="mb-8 page-break-inside-avoid">
+          <h4 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-chart-pie text-sky-600"></i> Analisis Penguasaan Materi
+          </h4>
+          <div id="rep-topic-breakdown" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Dirender via JS -->
+          </div>
+        </div>
+
+        <!-- Rincian Jawaban & Pembahasan Singkat -->
+        <div>
+          <h4 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-sky-600"></i> Rincian Evaluasi Butir Soal & Pembahasan
+          </h4>
+          <div id="rep-review-list" class="space-y-3">
+            <!-- Dirender via JS -->
+          </div>
+        </div>
+
+        <!-- Footer Tanda Tangan Digital pada Rapor -->
+        <div class="mt-8 pt-5 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 text-xs text-slate-500 page-break-inside-avoid">
+          <div>
+            <p class="font-bold text-slate-700">Catatan Sistem Evaluasi:</p>
+            <p>Dokumen ini dihasilkan secara otomatis oleh Media Pembelajaran Interaktif (MPI) Matematika Kelas IX.</p>
+          </div>
+          <div class="sm:text-right">
+            <p class="font-semibold text-slate-700">Guru Mata Pelajaran Matematika,</p>
+            <div class="h-10"></div>
+            <p class="font-bold text-slate-800 underline">Tim Pengembang Kurikulum SMP</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="no-print py-5 text-center text-xs font-semibold text-slate-500 border-t border-sky-200 bg-white/70">
+    <p>© 2026 MPI TKA Matematika Kelas 9 • Blox & Legends Interactive Edition</p>
+  </footer>
+
+  <!-- ==================== LOGIC JAVASCRIPT MANDIRI ==================== -->
+  <script>
+    /**
+     * =========================================================================
+     * KONFIGURASI GOOGLE APPS SCRIPT (GAS) WEB APP URL
+     * Ganti nilai konstanta di bawah ini dengan URL Web App hasil deploy GAS Anda
+     * =========================================================================
+     */
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwSGxnhBSXIoVsXklyEp9-dc_exGd18fRhV5NY8pwIrD9lJpc_7qNUhSvro6-CDohWWrQ/exec";
+
+    /**
+     * BANK SOAL TKA MATEMATIKA KELAS 9
+     */
+    const QUESTIONS = [
+      {
+        id: 1,
+        type: 'mc',
+        companion: 'blox',
+        topic: 'Teorema Pythagoras',
+        prompt: 'Dalam game <em>Blox Tower</em>, sebuah tangga disandarkan pada dinding menara setinggi <span class="math-font bg-amber-100 px-2 py-0.5 rounded font-bold">12 meter</span>. Jika jarak ujung bawah tangga ke kaki dinding adalah <span class="math-font bg-amber-100 px-2 py-0.5 rounded font-bold">9 meter</span>, panjang tangga tersebut adalah ....',
+        visualSVG: `
+          <div class="bg-sky-50/80 border-2 border-sky-200 rounded-2xl p-4 flex justify-center">
+            <svg class="w-64 h-44" viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="20" y1="150" x2="240" y2="150" stroke="#16A34A" stroke-width="4" stroke-linecap="round"/>
+              <rect x="45" y="25" width="25" height="125" fill="#38BDF8" stroke="#0369A1" stroke-width="2.5"/>
+              <polyline points="70,136 84,136 84,150" stroke="#EF4444" stroke-width="2.5" fill="none"/>
+              <line x1="70" y1="35" x2="195" y2="150" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
+              <text x="20" y="92" fill="#0369A1" font-weight="bold" font-size="13" font-family="monospace">12 m</text>
+              <text x="115" y="168" fill="#15803D" font-weight="bold" font-size="13" font-family="monospace">9 m</text>
+              <text x="142" y="85" fill="#B45309" font-weight="bold" font-size="14" font-family="monospace">Tangga = ?</text>
+            </svg>
+          </div>
+        `,
+        options: [
+          { key: 'A', text: '13 meter' },
+          { key: 'B', text: '15 meter' },
+          { key: 'C', text: '18 meter' },
+          { key: 'D', text: '21 meter' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Gunakan Teorema Pythagoras: c = √(12² + 9²) = √(144 + 81) = √225 = 15 meter (Tripel Pythagoras 9, 12, 15).'
+      },
+      {
+        id: 2,
+        type: 'dnd',
+        companion: 'hero',
+        topic: 'Teorema Pythagoras',
+        prompt: '<strong>Misi Mythic Knight — Tripel Pythagoras:</strong> Seret (atau ketuk) panjang sisi miring (hipotenusa) yang tepat untuk setiap pasangan sisi siku-siku berikut!',
+        items: [
+          { id: 'p1', label: '10 cm' },
+          { id: 'p2', label: '13 cm' },
+          { id: 'p3', label: '25 cm' }
+        ],
+        targets: [
+          { id: 'pt1', label: 'Sisi siku-siku 6 cm dan 8 cm → Hipotenusa =', correctItemId: 'p1' },
+          { id: 'pt2', label: 'Sisi siku-siku 5 cm dan 12 cm → Hipotenusa =', correctItemId: 'p2' },
+          { id: 'pt3', label: 'Sisi siku-siku 7 cm dan 24 cm → Hipotenusa =', correctItemId: 'p3' }
+        ],
+        explanation: '√(6²+8²) = √100 = 10 cm; √(5²+12²) = √169 = 13 cm; √(7²+24²) = √625 = 25 cm.'
+      },
+      {
+        id: 3,
+        type: 'mc',
+        companion: 'blox',
+        topic: 'Bangun Ruang Sisi Datar',
+        prompt: 'Sebuah peti harta karun <em>Blox Chest</em> berbentuk <strong>balok</strong> memiliki ukuran panjang <span class="math-font font-bold">15 cm</span>, lebar <span class="math-font font-bold">10 cm</span>, dan tinggi <span class="math-font font-bold">8 cm</span>. Luas permukaan seluruh peti tersebut adalah ....',
+        visualSVG: `
+          <div class="bg-amber-50/80 border-2 border-amber-200 rounded-2xl p-4 flex justify-center">
+            <svg class="w-64 h-40" viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="50,55 160,55 195,30 85,30" fill="#FDE047" stroke="#854D0E" stroke-width="2.5"/>
+              <rect x="50" y="55" width="110" height="75" fill="#FACC15" stroke="#854D0E" stroke-width="2.5"/>
+              <polygon points="160,55 195,30 195,105 160,130" fill="#EAB308" stroke="#854D0E" stroke-width="2.5"/>
+              <rect x="98" y="82" width="14" height="18" rx="2" fill="#38BDF8" stroke="#0369A1" stroke-width="2"/>
+              <text x="105" y="148" text-anchor="middle" fill="#854D0E" font-weight="bold" font-size="12" font-family="monospace">p = 15 cm</text>
+              <text x="202" y="122" fill="#854D0E" font-weight="bold" font-size="12" font-family="monospace">l = 10 cm</text>
+              <text x="22" y="96" fill="#854D0E" font-weight="bold" font-size="12" font-family="monospace">t=8</text>
+            </svg>
+          </div>
+        `,
+        options: [
+          { key: 'A', text: '350 cm²' },
+          { key: 'B', text: '700 cm²' },
+          { key: 'C', text: '1.200 cm²' },
+          { key: 'D', text: '1.400 cm²' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'L_balok = 2 × (p×l + p×t + l×t) = 2 × (15×10 + 15×8 + 10×8) = 2 × (150 + 120 + 80) = 2 × 350 = 700 cm².'
+      },
+      {
+        id: 4,
+        type: 'mc',
+        companion: 'hero',
+        topic: 'Bangun Ruang Sisi Datar',
+        prompt: 'Sebuah monumen kristal di <em>Land of Dawn</em> berbentuk <strong>limas segi empat beraturan</strong> dengan alas berbentuk persegi bersisi <span class="math-font font-bold">12 cm</span> dan tinggi limas <span class="math-font font-bold">10 cm</span>. Volume monumen kristal tersebut adalah ....',
+        options: [
+          { key: 'A', text: '360 cm³' },
+          { key: 'B', text: '480 cm³' },
+          { key: 'C', text: '720 cm³' },
+          { key: 'D', text: '1.440 cm³' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Volume Limas = ⅓ × Luas Alas × Tinggi = ⅓ × (12 × 12) × 10 = ⅓ × 144 × 10 = 48 × 10 = 480 cm³.'
+      },
+      {
+        id: 5,
+        type: 'dnd',
+        companion: 'blox',
+        topic: 'Bangun Ruang Sisi Datar',
+        prompt: '<strong>Misi Arsitek Blox:</strong> Pasangkan bangun ruang sisi datar berikut dengan rumus atau ciri yang tepat!',
+        items: [
+          { id: 'br1', label: 'V = s³ (sisi × sisi × sisi)' },
+          { id: 'br2', label: 'V = Luas Alas × Tinggi Prisma' },
+          { id: 'br3', label: '12 rusuk & 6 sisi persegi panjang' }
+        ],
+        targets: [
+          { id: 'brt1', label: 'Rumus Volume Kubus', correctItemId: 'br1' },
+          { id: 'brt2', label: 'Rumus Volume Prisma Tegak', correctItemId: 'br2' },
+          { id: 'brt3', label: 'Unsur pada Bangun Balok', correctItemId: 'br3' }
+        ],
+        explanation: 'Volume Kubus = s³; Volume Prisma = Luas Alas × Tinggi; Balok memiliki 12 rusuk dan 6 sisi berbentuk persegi panjang.'
+      },
+      {
+        id: 6,
+        type: 'mc',
+        companion: 'hero',
+        topic: 'Membaca Grafik & Diagram Batang',
+        prompt: 'Perhatikan <strong>Diagram Batang</strong> perolehan <em>Gold Coins</em> tim Esport kelas IX selama 4 minggu berikut! Selisih perolehan koin tertinggi dan terendah adalah ....',
+        visualSVG: `
+          <div class="bg-white border-2 border-sky-200 rounded-2xl p-4 overflow-x-auto">
+            <svg class="w-full max-w-md h-52 mx-auto" viewBox="0 0 360 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="50" y1="25" x2="335" y2="25" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="60" x2="335" y2="60" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="95" x2="335" y2="95" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="130" x2="335" y2="130" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="15" x2="50" y2="165" stroke="#475569" stroke-width="2"/>
+              <line x1="50" y1="165" x2="340" y2="165" stroke="#475569" stroke-width="2"/>
+              <text x="42" y="29" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">800</text>
+              <text x="42" y="64" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">600</text>
+              <text x="42" y="99" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">400</text>
+              <text x="42" y="134" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">200</text>
+              <text x="42" y="168" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">0</text>
+              <rect x="70" y="86" width="42" height="79" rx="4" fill="#38BDF8"/>
+              <text x="91" y="80" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold">450</text>
+              <text x="91" y="180" text-anchor="middle" fill="#334155" font-size="11" font-weight="bold">Minggu 1</text>
+              <rect x="138" y="34" width="42" height="131" rx="4" fill="#F59E0B"/>
+              <text x="159" y="28" text-anchor="middle" fill="#B45309" font-size="11" font-weight="bold">750</text>
+              <text x="159" y="180" text-anchor="middle" fill="#334155" font-size="11" font-weight="bold">Minggu 2</text>
+              <rect x="206" y="104" width="42" height="61" rx="4" fill="#F43F5E"/>
+              <text x="227" y="98" text-anchor="middle" fill="#BE123C" font-size="11" font-weight="bold">350</text>
+              <text x="227" y="180" text-anchor="middle" fill="#334155" font-size="11" font-weight="bold">Minggu 3</text>
+              <rect x="274" y="51" width="42" height="114" rx="4" fill="#10B981"/>
+              <text x="295" y="45" text-anchor="middle" fill="#047857" font-size="11" font-weight="bold">650</text>
+              <text x="295" y="180" text-anchor="middle" fill="#334155" font-size="11" font-weight="bold">Minggu 4</text>
+            </svg>
+          </div>
+        `,
+        options: [
+          { key: 'A', text: '300 koin' },
+          { key: 'B', text: '350 koin' },
+          { key: 'C', text: '400 koin' },
+          { key: 'D', text: '450 koin' }
+        ],
+        correctAnswer: 'C',
+        explanation: 'Perolehan tertinggi pada Minggu 2 = 750 koin. Perolehan terendah pada Minggu 3 = 350 koin. Selisih = 750 - 350 = 400 koin.'
+      },
+      {
+        id: 7,
+        type: 'mc',
+        companion: 'blox',
+        topic: 'Membaca Grafik & Diagram Batang',
+        prompt: 'Berdasarkan <strong>Grafik Garis</strong> jumlah pemain aktif server <em>Blox Nusantara</em> dari pukul 14.00 hingga 18.00 berikut, <strong>rata-rata (mean)</strong> jumlah pemain aktif per jam adalah ....',
+        visualSVG: `
+          <div class="bg-white border-2 border-emerald-200 rounded-2xl p-4 overflow-x-auto">
+            <svg class="w-full max-w-md h-52 mx-auto" viewBox="0 0 360 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="50" y1="30" x2="335" y2="30" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="65" x2="335" y2="65" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="100" x2="335" y2="100" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="135" x2="335" y2="135" stroke="#E2E8F0" stroke-dasharray="4 4"/>
+              <line x1="50" y1="15" x2="50" y2="160" stroke="#475569" stroke-width="2"/>
+              <line x1="50" y1="160" x2="340" y2="160" stroke="#475569" stroke-width="2"/>
+              <text x="42" y="34" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">100</text>
+              <text x="42" y="69" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">75</text>
+              <text x="42" y="104" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">50</text>
+              <text x="42" y="139" text-anchor="end" fill="#475569" font-size="11" font-weight="bold">25</text>
+              <polyline points="75,114 135,86 195,44 255,58 315,58" fill="none" stroke="#0EA5E9" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="75" cy="114" r="5" fill="#F59E0B" stroke="#fff" stroke-width="2"/>
+              <text x="75" y="104" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold">40</text>
+              <text x="75" y="176" text-anchor="middle" fill="#334155" font-size="10" font-weight="bold">14.00</text>
+
+              <circle cx="135" cy="86" r="5" fill="#F59E0B" stroke="#fff" stroke-width="2"/>
+              <text x="135" y="76" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold">60</text>
+              <text x="135" y="176" text-anchor="middle" fill="#334155" font-size="10" font-weight="bold">15.00</text>
+
+              <circle cx="195" cy="44" r="5" fill="#F59E0B" stroke="#fff" stroke-width="2"/>
+              <text x="195" y="34" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold">90</text>
+              <text x="195" y="176" text-anchor="middle" fill="#334155" font-size="10" font-weight="bold">16.00</text>
+
+              <circle cx="255" cy="58" r="5" fill="#F59E0B" stroke="#fff" stroke-width="2"/>
+              <text x="255" y="48" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold">80</text>
+              <text x="255" y="176" text-anchor="middle" fill="#334155" font-size="10" font-weight="bold">17.00</text>
+
+              <circle cx="315" cy="58" r="5" fill="#F59E0B" stroke="#fff" stroke-width="2"/>
+              <text x="315" y="48" text-anchor="middle" fill="#0369A1" font-size="11" font-weight="bold">80</text>
+              <text x="315" y="176" text-anchor="middle" fill="#334155" font-size="10" font-weight="bold">18.00</text>
+            </svg>
+          </div>
+        `,
+        options: [
+          { key: 'A', text: '65 pemain' },
+          { key: 'B', text: '70 pemain' },
+          { key: 'C', text: '75 pemain' },
+          { key: 'D', text: '80 pemain' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Total pemain = 40 + 60 + 90 + 80 + 80 = 350 pemain selama 5 titik waktu. Rata-rata = 350 / 5 = 70 pemain.'
+      },
+      {
+        id: 8,
+        type: 'dnd',
+        companion: 'hero',
+        topic: 'Membaca Grafik & Diagram Batang',
+        prompt: '<strong>Misi Analis Data Esport:</strong> Dari data jumlah <em>Win Streak</em> 5 pemain utama: <span class="math-font bg-sky-100 px-2 py-0.5 rounded font-bold">[6, 8, 5, 8, 3]</span>, cocokkan istilah statistika berikut dengan nilainya!',
+        items: [
+          { id: 'st1', label: '6' },
+          { id: 'st2', label: '8' },
+          { id: 'st3', label: '5' }
+        ],
+        targets: [
+          { id: 'stt1', label: 'Modus (Nilai yang paling sering muncul)', correctItemId: 'st2' },
+          { id: 'stt2', label: 'Median (Nilai tengah setelah diurutkan)', correctItemId: 'st1' },
+          { id: 'stt3', label: 'Jangkauan / Range (Tertinggi - Terendah)', correctItemId: 'st3' }
+        ],
+        explanation: 'Urutan data: 3, 5, 6, 8, 8. Modus = 8 (muncul 2 kali); Median = 6 (data ke-3); Jangkauan = 8 - 3 = 5.'
+      },
+      {
+        id: 9,
+        type: 'mc',
+        companion: 'blox',
+        topic: 'Transformasi Geometri',
+        prompt: 'Karakter <em>Blox Kid</em> berada di koordinat <span class="math-font font-bold">A(3, -5)</span>. Jika karakter melompat dengan translasi <span class="math-font font-bold">T(4, 7)</span> lalu dicerminkan terhadap <strong>sumbu-Y</strong>, koordinat akhir karakter adalah ....',
+        options: [
+          { key: 'A', text: '(-7, 2)' },
+          { key: 'B', text: '(7, -2)' },
+          { key: 'C', text: '(-7, -2)' },
+          { key: 'D', text: '(7, 2)' }
+        ],
+        correctAnswer: 'A',
+        explanation: 'Translasi T(4, 7): (3 + 4, -5 + 7) = (7, 2). Kemudian refleksi terhadap sumbu-Y mengubah (x, y) menjadi (-x, y), sehingga menjadi (-7, 2).'
+      },
+      {
+        id: 10,
+        type: 'mc',
+        companion: 'hero',
+        topic: 'Sistem Persamaan Linear Dua Variabel',
+        prompt: 'Di toko <em>Item Shop</em>, harga 2 <em>Diamond Pass</em> dan 3 <em>Starlight Card</em> adalah <span class="math-font font-bold">Rp130.000</span>, sedangkan harga 3 <em>Diamond Pass</em> dan 2 <em>Starlight Card</em> adalah <span class="math-font font-bold">Rp145.000</span>. Harga 1 <em>Diamond Pass</em> dan 1 <em>Starlight Card</em> adalah ....',
+        options: [
+          { key: 'A', text: 'Rp50.000' },
+          { key: 'B', text: 'Rp55.000' },
+          { key: 'C', text: 'Rp60.000' },
+          { key: 'D', text: 'Rp65.000' }
+        ],
+        correctAnswer: 'B',
+        explanation: 'Jumlahkan kedua persamaan: (2d + 3s) + (3d + 2s) = 130.000 + 145.000 → 5d + 5s = 275.000 → d + s = 275.000 / 5 = Rp55.000.'
+      }
+    ];
+
+    /**
+     * STATE APLIKASI
+     */
+    const appState = {
+      student: {
+        name: '',
+        className: ''
+      },
+      currentIndex: 0,
+      answers: {},
+      selectedDragChip: null,
+      lastPayload: null
+    };
+
+    /**
+     * UTILITAS PEMBERSIH TAG HTML (Untuk dikirim ke Google Sheets agar rapi)
+     */
+    function stripHTML(htmlStr) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = htmlStr || '';
+      return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
+    }
+
+    /**
+     * INTEGRASI DATABASE GOOGLE SHEETS VIA GOOGLE APPS SCRIPT
+     */
+    function isGASConfigured() {
+      return typeof GAS_URL === 'string' && GAS_URL.trim() !== '' && GAS_URL !== 'URL_GAS_ANDA_DISINI' && GAS_URL.startsWith('http');
+    }
+
+    function updateNavSyncBadge(status, text) {
+      const dot = document.getElementById('db-sync-dot');
+      const label = document.getElementById('db-sync-text');
+      if (!dot || !label) return;
+
+      label.textContent = text;
+      dot.className = 'w-2 h-2 rounded-full ';
+      if (status === 'syncing') dot.className += 'bg-amber-500 animate-ping';
+      else if (status === 'success') dot.className += 'bg-emerald-500';
+      else if (status === 'error') dot.className += 'bg-rose-500';
+      else dot.className += 'bg-sky-500';
+    }
+
+    function buildQuestionBankPayload() {
+      return QUESTIONS.map(q => {
+        let choicesText = '';
+        if (q.type === 'mc') {
+          choicesText = q.options.map(o => `${o.key}. ${o.text}`).join(' | ');
+        } else if (q.type === 'dnd') {
+          const cards = q.items.map(i => i.label).join(', ');
+          const targets = q.targets.map(t => stripHTML(t.label)).join(' ; ');
+          choicesText = `Kartu: [${cards}] || Target: [${targets}]`;
+        }
+
+        return {
+          no: q.id,
+          menu: 'Menu Bermain (TKA)',
+          topik: q.topic,
+          tipe: q.type === 'mc' ? 'Pilihan Ganda' : 'Drag & Drop',
+          pertanyaan: stripHTML(q.prompt),
+          pilihanJawaban: choicesText,
+          kunciJawaban: stripHTML(getCorrectAnswerText(q))
+        };
+      });
+    }
+
+    async function syncQuestionBankToSheets() {
+      if (!isGASConfigured()) {
+        updateNavSyncBadge('idle', 'Demo Mode (GAS Belum Diisi)');
+        return;
+      }
+
+      try {
+        updateNavSyncBadge('syncing', 'Sinkron Soal...');
+        const payload = {
+          action: 'sync_questions',
+          questions: buildQuestionBankPayload()
+        };
+
+        await fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        updateNavSyncBadge('success', 'Sheets Terhubung');
+      } catch (err) {
+        updateNavSyncBadge('error', 'Offline Mode');
+      }
+    }
+
+    async function sendResultToGoogleSheets(resultPayload) {
+      appState.lastPayload = resultPayload;
+      const banner = document.getElementById('sheets-save-banner');
+      const icon = document.getElementById('sheets-save-icon');
+      const text = document.getElementById('sheets-save-text');
+      const retryBtn = document.getElementById('btn-retry-sync');
+
+      banner.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'text-emerald-800', 'bg-rose-50', 'border-rose-200', 'text-rose-800', 'bg-amber-50', 'border-amber-200', 'text-amber-800');
+      retryBtn.classList.add('hidden');
+
+      if (!isGASConfigured()) {
+        banner.classList.add('bg-amber-50', 'border-amber-200', 'text-amber-800');
+        icon.className = 'fa-solid fa-triangle-exclamation text-amber-600 text-base';
+        text.textContent = 'Mode Lokal: URL Google Apps Script (GAS_URL) belum diatur. Data rapor hanya tampil di layar.';
+        return;
+      }
+
+      banner.classList.add('bg-sky-50', 'border-sky-200', 'text-sky-800');
+      icon.className = 'fa-solid fa-circle-notch fa-spin text-sky-600 text-base';
+      text.textContent = 'Menyimpan nilai & rincian jawaban ke Google Sheets Guru...';
+      updateNavSyncBadge('syncing', 'Menyimpan Data...');
+
+      try {
+        await fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(resultPayload)
+        });
+
+        banner.classList.remove('bg-sky-50', 'border-sky-200', 'text-sky-800');
+        banner.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-800');
+        icon.className = 'fa-solid fa-cloud-check fa-circle-check text-emerald-600 text-base';
+        text.textContent = 'Berhasil! Data nilai dan rincian jawaban siswa telah tersimpan di Google Sheets.';
+        updateNavSyncBadge('success', 'Tersimpan di Sheets');
+      } catch (error) {
+        banner.classList.remove('bg-sky-50', 'border-sky-200', 'text-sky-800');
+        banner.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-800');
+        icon.className = 'fa-solid fa-circle-exclamation text-rose-600 text-base';
+        text.textContent = 'Gagal mengirim ke Google Sheets. Periksa koneksi internet Anda.';
+        retryBtn.classList.remove('hidden');
+        updateNavSyncBadge('error', 'Gagal Sinkron');
+      }
+    }
+
+    document.getElementById('btn-retry-sync').addEventListener('click', () => {
+      if (appState.lastPayload) {
+        sendResultToGoogleSheets(appState.lastPayload);
+      }
+    });
+
+    // Jalankan sinkronisasi bank soal saat halaman pertama kali dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+      syncQuestionBankToSheets();
+    });
+
+    /**
+     * REFERENSI ELEMEN DOM
+     */
+    const views = {
+      cover: document.getElementById('view-cover'),
+      quiz: document.getElementById('view-quiz'),
+      report: document.getElementById('view-report')
+    };
+
+    const studentForm = document.getElementById('student-form');
+    const inputFullname = document.getElementById('input-fullname');
+    const inputClass = document.getElementById('input-class');
+    const formErrorBox = document.getElementById('form-error-box');
+    const formErrorMessage = document.getElementById('form-error-message');
+    const errName = document.getElementById('err-name');
+    const errClass = document.getElementById('err-class');
+
+    /**
+     * FUNGSI UTILITAS PERPINDAHAN TAMPILAN
+     */
+    function switchView(viewName) {
+      Object.values(views).forEach(el => el.classList.add('hidden'));
+      views[viewName].classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * 1. VALIDASI & SUBMIT FORM IDENTITAS SISWA (ELEGAN TANPA ALERT)
+     */
+    function clearValidationErrors() {
+      formErrorBox.classList.add('hidden');
+      formErrorBox.classList.remove('flex');
+      errName.classList.add('hidden');
+      errClass.classList.add('hidden');
+      inputFullname.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
+      inputClass.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
+    }
+
+    inputFullname.addEventListener('input', clearValidationErrors);
+    inputClass.addEventListener('change', clearValidationErrors);
+
+    studentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearValidationErrors();
+
+      const rawName = inputFullname.value.trim();
+      const selectedClass = inputClass.value;
+      let isValid = true;
+      let errorDetails = [];
+
+      if (rawName.length < 3) {
+        isValid = false;
+        errName.classList.remove('hidden');
+        inputFullname.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+        errorDetails.push('Nama lengkap minimal 3 karakter');
+      }
+
+      const validClasses = ['IX-1', 'IX-2', 'IX-3', 'IX-4'];
+      if (!validClasses.includes(selectedClass)) {
+        isValid = false;
+        errClass.classList.remove('hidden');
+        inputClass.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+        errorDetails.push('Kelas (IX-1 sampai IX-4) wajib dipilih');
+      }
+
+      if (!isValid) {
+        formErrorMessage.textContent = errorDetails.join(' dan ') + ' sebelum memulai misi.';
+        formErrorBox.classList.remove('hidden');
+        formErrorBox.classList.add('flex', 'animate-shake');
+        setTimeout(() => formErrorBox.classList.remove('animate-shake'), 450);
+        return;
+      }
+
+      appState.student.name = rawName;
+      appState.student.className = selectedClass;
+
+      document.getElementById('nav-student-name').textContent = rawName;
+      document.getElementById('nav-student-class').textContent = selectedClass;
+      const navBadge = document.getElementById('nav-student-badge');
+      navBadge.classList.remove('hidden');
+      navBadge.classList.add('flex');
+
+      appState.currentIndex = 0;
+      appState.answers = {};
+      renderQuestion();
+      switchView('quiz');
+    });
+
+    /**
+     * 2. RENDER SOAL & INTERAKSI (MULTIPLE CHOICE & DRAG-AND-DROP)
+     */
+    function isQuestionAnswered(q) {
+      const ans = appState.answers[q.id];
+      if (!ans) return false;
+      if (q.type === 'mc') return typeof ans === 'string' && ans.length > 0;
+      if (q.type === 'dnd') {
+        return q.targets.every(t => Boolean(ans[t.id]));
+      }
+      return false;
+    }
+
+    function renderQuestionPills() {
+      const container = document.getElementById('question-pills');
+      container.innerHTML = '';
+
+      QUESTIONS.forEach((q, idx) => {
+        const isCurrent = idx === appState.currentIndex;
+        const answered = isQuestionAnswered(q);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = idx + 1;
+        btn.title = `Stage ${idx + 1} (${q.type === 'mc' ? 'Pilihan Ganda' : 'Drag & Drop'})`;
+
+        let classes = 'w-8 h-8 sm:w-9 sm:h-9 rounded-xl text-xs font-extrabold transition flex items-center justify-center cursor-pointer ';
+        if (isCurrent) {
+          classes += 'bg-gradient-to-br from-amber-500 to-orange-500 text-white ring-2 ring-amber-300 shadow-sm scale-105';
+        } else if (answered) {
+          classes += 'bg-emerald-100 text-emerald-800 border-2 border-emerald-300 hover:bg-emerald-200';
+        } else {
+          classes += 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-sky-100';
+        }
+
+        btn.className = classes;
+        btn.addEventListener('click', () => {
+          appState.currentIndex = idx;
+          appState.selectedDragChip = null;
+          renderQuestion();
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[appState.currentIndex];
+      const total = QUESTIONS.length;
+
+      document.getElementById('q-category-badge').textContent = q.topic;
+      const typeBadge = document.getElementById('q-type-badge');
+      if (q.type === 'mc') {
+        typeBadge.textContent = 'Pilihan Ganda (4 Opsi)';
+        typeBadge.className = 'px-3.5 py-1 rounded-full text-xs font-extrabold bg-sky-100 text-sky-800 border border-sky-200';
+      } else {
+        typeBadge.textContent = 'Tantangan Drag & Drop';
+        typeBadge.className = 'px-3.5 py-1 rounded-full text-xs font-extrabold bg-amber-100 text-amber-800 border border-amber-200';
+      }
+
+      const compBadge = document.getElementById('q-companion-badge');
+      if (q.companion === 'blox') {
+        compBadge.innerHTML = `<span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-extrabold border border-amber-200"><i class="fa-solid fa-cube mr-1"></i> Blox Builder</span>`;
+      } else {
+        compBadge.innerHTML = `<span class="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 font-extrabold border border-rose-200"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Mythic Hero</span>`;
+      }
+
+      document.getElementById('q-current-num').textContent = appState.currentIndex + 1;
+      document.getElementById('q-total-num').textContent = total;
+      document.getElementById('quiz-progress-bar').style.width = `${((appState.currentIndex + 1) / total) * 100}%`;
+
+      document.getElementById('q-prompt').innerHTML = q.prompt;
+
+      const visualBox = document.getElementById('q-visual');
+      if (q.visualSVG) {
+        visualBox.innerHTML = q.visualSVG;
+        visualBox.classList.remove('hidden');
+      } else {
+        visualBox.innerHTML = '';
+        visualBox.classList.add('hidden');
+      }
+
+      renderQuestionPills();
+
+      const interactionArea = document.getElementById('q-interaction-area');
+      interactionArea.innerHTML = '';
+
+      if (q.type === 'mc') {
+        renderMultipleChoice(q, interactionArea);
+      } else if (q.type === 'dnd') {
+        renderDragAndDrop(q, interactionArea);
+      }
+
+      const btnPrev = document.getElementById('btn-prev');
+      const btnNext = document.getElementById('btn-next');
+      const btnFinish = document.getElementById('btn-finish');
+
+      btnPrev.disabled = appState.currentIndex === 0;
+
+      if (appState.currentIndex === total - 1) {
+        btnNext.classList.add('hidden');
+        btnFinish.classList.remove('hidden');
+      } else {
+        btnNext.classList.remove('hidden');
+        btnFinish.classList.add('hidden');
+      }
+    }
+
+    /**
+     * RENDER TIPE 1: MULTIPLE CHOICE (4 OPSI A, B, C, D)
+     */
+    function renderMultipleChoice(q, container) {
+      const currentAns = appState.answers[q.id] || null;
+      const grid = document.createElement('div');
+      grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3.5';
+
+      q.options.forEach(opt => {
+        const isSelected = currentAns === opt.key;
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = `w-full text-left p-4 rounded-2xl border-2 transition flex items-center gap-3.5 cursor-pointer ${
+          isSelected
+            ? 'border-sky-500 bg-sky-50 shadow-sm'
+            : 'border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/40'
+        }`;
+
+        card.innerHTML = `
+          <span class="w-9 h-9 rounded-xl font-extrabold text-sm flex items-center justify-center shrink-0 transition ${
+            isSelected ? 'bg-gradient-to-br from-sky-500 to-blue-600 text-white' : 'bg-slate-100 text-slate-700'
+          }">
+            ${opt.key}
+          </span>
+          <span class="font-bold text-slate-800 text-sm sm:text-base math-font">${opt.text}</span>
+        `;
+
+        card.addEventListener('click', () => {
+          appState.answers[q.id] = opt.key;
+          renderQuestion();
+        });
+
+        grid.appendChild(card);
+      });
+
+      container.appendChild(grid);
+    }
+
+    /**
+     * RENDER TIPE 2: DRAG AND DROP (DENGAN DUKUNGAN TAP/CLICK UNTUK MOBILE)
+     */
+    function renderDragAndDrop(q, container) {
+      if (!appState.answers[q.id]) {
+        appState.answers[q.id] = {};
+      }
+      const userMap = appState.answers[q.id];
+
+      const guide = document.createElement('div');
+      guide.className = 'mb-4 p-3 rounded-2xl bg-amber-50 border-2 border-amber-200 text-xs text-amber-900 flex items-center justify-between gap-2';
+      guide.innerHTML = `
+        <span><i class="fa-solid fa-hand-pointer mr-1.5 text-amber-600"></i> <strong>Cara Main:</strong> Seret kartu jawaban ke kotak target, atau <em>ketuk kartu</em> lalu <em>ketuk kotak tujuan</em>.</span>
+        <button type="button" id="btn-reset-dnd" class="px-2.5 py-1 rounded-lg bg-white border border-amber-300 text-amber-800 font-extrabold hover:bg-amber-100 shrink-0 cursor-pointer">
+          Reset
+        </button>
+      `;
+      container.appendChild(guide);
+
+      guide.querySelector('#btn-reset-dnd').addEventListener('click', () => {
+        appState.answers[q.id] = {};
+        appState.selectedDragChip = null;
+        renderQuestion();
+      });
+
+      const usedItemIds = Object.values(userMap);
+      const bankWrapper = document.createElement('div');
+      bankWrapper.className = 'p-4 rounded-2xl bg-sky-50/70 border-2 border-sky-200 mb-5';
+      bankWrapper.innerHTML = `<div class="text-xs font-extrabold text-sky-800 uppercase tracking-wider mb-2.5">Inventory Kartu Jawaban:</div>`;
+
+      const chipsRow = document.createElement('div');
+      chipsRow.className = 'flex flex-wrap gap-2.5 min-h-[46px]';
+
+      const availableItems = q.items.filter(item => !usedItemIds.includes(item.id));
+      if (availableItems.length === 0) {
+        chipsRow.innerHTML = `<span class="text-xs text-slate-500 font-semibold italic py-2">Semua kartu jawaban telah dipasang!</span>`;
+      } else {
+        availableItems.forEach(item => {
+          const isChipSelected = appState.selectedDragChip === item.id;
+          const chip = document.createElement('div');
+          chip.draggable = true;
+          chip.dataset.itemId = item.id;
+          chip.className = `drag-item px-4 py-2.5 rounded-xl bg-white border-2 font-mono font-bold text-sm text-sky-700 shadow-sm flex items-center gap-2 ${
+            isChipSelected ? 'selected-chip border-amber-500 ring-2 ring-amber-300' : 'border-sky-300 hover:border-amber-500'
+          }`;
+          chip.innerHTML = `<i class="fa-solid fa-grip-vertical text-slate-300 text-xs"></i> <span>${item.label}</span>`;
+
+          chip.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', item.id);
+            appState.selectedDragChip = item.id;
+          });
+
+          chip.addEventListener('click', () => {
+            appState.selectedDragChip = (appState.selectedDragChip === item.id) ? null : item.id;
+            renderQuestion();
+          });
+
+          chipsRow.appendChild(chip);
+        });
+      }
+      bankWrapper.appendChild(chipsRow);
+      container.appendChild(bankWrapper);
+
+      const targetsList = document.createElement('div');
+      targetsList.className = 'space-y-3';
+
+      q.targets.forEach(target => {
+        const assignedItemId = userMap[target.id];
+        const assignedItem = q.items.find(i => i.id === assignedItemId);
+
+        const row = document.createElement('div');
+        row.className = 'p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'text-sm font-bold text-slate-700';
+        labelDiv.innerHTML = target.label;
+
+        const zone = document.createElement('div');
+        zone.className = `drop-zone sm:w-60 rounded-xl border-2 border-dashed px-3.5 py-2 flex items-center justify-between cursor-pointer ${
+          assignedItem
+            ? 'border-emerald-500 bg-emerald-50/70'
+            : appState.selectedDragChip
+              ? 'border-amber-400 bg-amber-50/60 animate-pulse'
+              : 'border-slate-300 bg-slate-50'
+        }`;
+
+        if (assignedItem) {
+          zone.innerHTML = `
+            <span class="font-mono font-bold text-sm text-emerald-800">${assignedItem.label}</span>
+            <button type="button" title="Lepas kartu" class="text-slate-400 hover:text-rose-600 px-1.5">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          `;
+          zone.querySelector('button').addEventListener('click', (e) => {
+            e.stopPropagation();
+            delete appState.answers[q.id][target.id];
+            renderQuestion();
+          });
+        } else {
+          zone.innerHTML = `<span class="text-xs text-slate-400 font-semibold mx-auto">Letakkan jawaban di sini</span>`;
+        }
+
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('drag-over');
+        });
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('drag-over');
+        });
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          const droppedItemId = e.dataTransfer.getData('text/plain') || appState.selectedDragChip;
+          if (droppedItemId) {
+            assignItemToTarget(q.id, target.id, droppedItemId);
+          }
+        });
+
+        zone.addEventListener('click', () => {
+          if (appState.selectedDragChip) {
+            assignItemToTarget(q.id, target.id, appState.selectedDragChip);
+          }
+        });
+
+        row.appendChild(labelDiv);
+        row.appendChild(zone);
+        targetsList.appendChild(row);
+      });
+
+      container.appendChild(targetsList);
+    }
+
+    function assignItemToTarget(questionId, targetId, itemId) {
+      const currentMap = appState.answers[questionId];
+      Object.keys(currentMap).forEach(tKey => {
+        if (currentMap[tKey] === itemId) {
+          delete currentMap[tKey];
+        }
+      });
+      currentMap[targetId] = itemId;
+      appState.selectedDragChip = null;
+      renderQuestion();
+    }
+
+    /**
+     * NAVIGASI NEXT, PREV & MODAL KONFIRMASI
+     */
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      if (appState.currentIndex > 0) {
+        appState.currentIndex--;
+        appState.selectedDragChip = null;
+        renderQuestion();
+      }
+    });
+
+    document.getElementById('btn-next').addEventListener('click', () => {
+      if (appState.currentIndex < QUESTIONS.length - 1) {
+        appState.currentIndex++;
+        appState.selectedDragChip = null;
+        renderQuestion();
+      }
+    });
+
+    const confirmModal = document.getElementById('confirm-modal');
+    document.getElementById('btn-finish').addEventListener('click', () => {
+      const unansweredCount = QUESTIONS.filter(q => !isQuestionAnswered(q)).length;
+      const descEl = document.getElementById('confirm-modal-desc');
+
+      if (unansweredCount > 0) {
+        descEl.innerHTML = `<span class="text-rose-600 font-bold">Perhatian: Masih ada ${unansweredCount} soal yang belum terisi lengkap.</span> Apakah Anda yakin ingin langsung mengumpulkan dan melihat Laporan Hasil Belajar?`;
+      } else {
+        descEl.textContent = 'Mantap! Semua 10 stage telah dijawab. Klik "Kumpulkan Sekarang" untuk menyimpan nilai ke Google Sheets dan mencetak Laporan Hasil Belajar PDF.';
+      }
+      confirmModal.classList.remove('hidden');
+    });
+
+    document.getElementById('btn-cancel-submit').addEventListener('click', () => {
+      confirmModal.classList.add('hidden');
+    });
+
+    document.getElementById('btn-confirm-submit').addEventListener('click', () => {
+      confirmModal.classList.add('hidden');
+      generateReport();
+      switchView('report');
+    });
+
+    /**
+     * 3. PERHITUNGAN NILAI, PEMBUATAN LAPORAN & PENGIRIMAN KE GOOGLE SHEETS
+     */
+    function evaluateQuestion(q) {
+      const ans = appState.answers[q.id];
+      if (!ans) return { isCorrect: false, studentAnswerText: 'Tidak dijawab', correctAnswerText: getCorrectAnswerText(q) };
+
+      if (q.type === 'mc') {
+        const chosenOpt = q.options.find(o => o.key === ans);
+        const correctOpt = q.options.find(o => o.key === q.correctAnswer);
+        return {
+          isCorrect: ans === q.correctAnswer,
+          studentAnswerText: chosenOpt ? `${chosenOpt.key}. ${chosenOpt.text}` : 'Tidak dijawab',
+          correctAnswerText: `${correctOpt.key}. ${correctOpt.text}`
+        };
+      }
+
+      if (q.type === 'dnd') {
+        let allMatched = true;
+        const studentPairs = [];
+        const correctPairs = [];
+
+        q.targets.forEach(t => {
+          const placedId = ans[t.id];
+          const placedObj = q.items.find(i => i.id === placedId);
+          const correctObj = q.items.find(i => i.id === t.correctItemId);
+
+          if (placedId !== t.correctItemId) {
+            allMatched = false;
+          }
+          studentPairs.push(`${t.label} → [${placedObj ? placedObj.label : 'Kosong'}]`);
+          correctPairs.push(`${t.label} → [${correctObj.label}]`);
+        });
+
+        return {
+          isCorrect: allMatched,
+          studentAnswerText: studentPairs.join(' | '),
+          correctAnswerText: correctPairs.join(' | ')
+        };
+      }
+    }
+
+    function getCorrectAnswerText(q) {
+      if (q.type === 'mc') {
+        const correctOpt = q.options.find(o => o.key === q.correctAnswer);
+        return `${correctOpt.key}. ${correctOpt.text}`;
+      }
+      return q.targets.map(t => {
+        const c = q.items.find(i => i.id === t.correctItemId);
+        return `${t.label} → [${c.label}]`;
+      }).join(' | ');
+    }
+
+    function generateReport() {
+      let correctCount = 0;
+      let answeredCount = 0;
+      const topicStats = {};
+      const studentAnswersDetail = [];
+
+      const reviewListEl = document.getElementById('rep-review-list');
+      reviewListEl.innerHTML = '';
+
+      QUESTIONS.forEach((q, idx) => {
+        if (isQuestionAnswered(q)) answeredCount++;
+        const evalResult = evaluateQuestion(q);
+        if (evalResult.isCorrect) correctCount++;
+
+        // Simpan detail inputan untuk dikirim ke Google Sheets
+        studentAnswersDetail.push({
+          soalNo: q.id,
+          jawabanSiswa: stripHTML(evalResult.studentAnswerText),
+          status: evalResult.isCorrect ? 'Benar' : 'Salah'
+        });
+
+        if (!topicStats[q.topic]) {
+          topicStats[q.topic] = { total: 0, correct: 0 };
+        }
+        topicStats[q.topic].total++;
+        if (evalResult.isCorrect) topicStats[q.topic].correct++;
+
+        const itemCard = document.createElement('div');
+        itemCard.className = `p-4 rounded-2xl border page-break-inside-avoid ${
+          evalResult.isCorrect ? 'border-emerald-200 bg-emerald-50/40' : 'border-rose-200 bg-rose-50/40'
+        }`;
+
+        itemCard.innerHTML = `
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg text-xs font-extrabold flex items-center justify-center ${
+                evalResult.isCorrect ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'
+              }">${idx + 1}</span>
+              <span class="text-xs font-bold text-slate-600">${q.topic}</span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold ${
+              evalResult.isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+            }">
+              ${evalResult.isCorrect ? '✓ Benar (+10)' : '✕ Kurang Tepat (0)'}
+            </span>
+          </div>
+          <div class="text-xs sm:text-sm font-semibold text-slate-800 mb-2">${q.prompt}</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-2">
+            <div class="p-2 rounded-lg bg-white border border-slate-200">
+              <span class="text-slate-400 block font-semibold">Jawaban Siswa:</span>
+              <span class="font-bold ${evalResult.isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${evalResult.studentAnswerText}</span>
+            </div>
+            <div class="p-2 rounded-lg bg-white border border-slate-200">
+              <span class="text-slate-400 block font-semibold">Kunci Jawaban:</span>
+              <span class="font-bold text-slate-800">${evalResult.correctAnswerText}</span>
+            </div>
+          </div>
+          <div class="text-xs text-slate-600 bg-white/90 p-2.5 rounded-lg border border-slate-200/80">
+            <strong class="text-sky-700">Pembahasan:</strong> ${q.explanation}
+          </div>
+        `;
+        reviewListEl.appendChild(itemCard);
+      });
+
+      const wrongCount = QUESTIONS.length - correctCount;
+      const finalScore = Math.round((correctCount / QUESTIONS.length) * 100);
+
+      let predicateText = 'Warrior (Perlu Bimbingan)';
+      let predicateClass = 'bg-rose-100 text-rose-800';
+      if (finalScore >= 90) {
+        predicateText = 'Mythical Glory (Sangat Baik)';
+        predicateClass = 'bg-amber-100 text-amber-900 border border-amber-300';
+      } else if (finalScore >= 75) {
+        predicateText = 'Legend (Tuntas KKM)';
+        predicateClass = 'bg-emerald-100 text-emerald-800';
+      } else if (finalScore >= 60) {
+        predicateText = 'Epic (Cukup / Remedial Ringan)';
+        predicateClass = 'bg-sky-100 text-sky-800';
+      }
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('id-ID', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+
+      document.getElementById('rep-doc-id').textContent = `TKA-${appState.student.className}-${Math.floor(1000 + Math.random() * 9000)}`;
+      document.getElementById('rep-date').textContent = `Tanggal Evaluasi: ${dateStr}`;
+      document.getElementById('rep-name').textContent = appState.student.name;
+      document.getElementById('rep-class').textContent = `Kelas ${appState.student.className}`;
+      document.getElementById('rep-answered').textContent = `${answeredCount} / ${QUESTIONS.length} Soal`;
+      document.getElementById('rep-score').textContent = finalScore;
+      document.getElementById('rep-correct-count').textContent = correctCount;
+
+      const predEl = document.getElementById('rep-predicate');
+      predEl.textContent = predicateText;
+      predEl.className = `inline-block px-2.5 py-0.5 rounded-md text-xs font-extrabold mt-0.5 ${predicateClass}`;
+
+      const topicContainer = document.getElementById('rep-topic-breakdown');
+      topicContainer.innerHTML = '';
+      Object.entries(topicStats).forEach(([topicName, stat]) => {
+        const pct = Math.round((stat.correct / stat.total) * 100);
+        const box = document.createElement('div');
+        box.className = 'p-3.5 rounded-xl border border-slate-200 bg-slate-50/80';
+        box.innerHTML = `
+          <div class="flex justify-between items-center text-xs font-bold mb-1.5">
+            <span class="text-slate-700">${topicName}</span>
+            <span class="text-sky-700">${stat.correct}/${stat.total} (${pct}%)</span>
+          </div>
+          <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div class="h-full ${pct >= 75 ? 'bg-emerald-500' : pct >= 50 ? 'bg-amber-500' : 'bg-rose-500'} rounded-full" style="width: ${pct}%"></div>
+          </div>
+        `;
+        topicContainer.appendChild(box);
+      });
+
+      // Kirim otomatis data hasil siswa + bank soal ke Google Apps Script
+      const submissionPayload = {
+        action: 'submit_result',
+        namaSiswa: appState.student.name,
+        kelas: appState.student.className,
+        jumlahBenar: correctCount,
+        jumlahSalah: wrongCount,
+        skorAkhir: finalScore,
+        predikat: predicateText,
+        detailJawaban: studentAnswersDetail,
+        questions: buildQuestionBankPayload()
+      };
+
+      sendResultToGoogleSheets(submissionPayload);
+    }
+
+    /**
+     * 4. EXPORT PDF OTOMATIS (html2pdf.js + FALLBACK window.print())
+     */
+    document.getElementById('btn-download-pdf').addEventListener('click', function() {
+      const reportElement = document.getElementById('report-container');
+      const toast = document.getElementById('pdf-status-toast');
+      const toastText = document.getElementById('pdf-status-text');
+
+      const safeName = appState.student.name.replace(/[^a-zA-Z0-9]/g, '_');
+      const fileName = `Laporan_TKA_Matematika_${appState.student.className}_${safeName}.pdf`;
+
+      toast.classList.remove('hidden');
+      toastText.textContent = 'Sedang menyusun dan mengunduh file PDF otomatis...';
+
+      if (typeof html2pdf !== 'undefined') {
+        const opt = {
+          margin:       [10, 10, 10, 10],
+          filename:     fileName,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2, useCORS: true, logging: false },
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(reportElement).save()
+          .then(() => {
+            toastText.textContent = `Berhasil mengunduh ${fileName}!`;
+            setTimeout(() => toast.classList.add('hidden'), 3500);
+          })
+          .catch(() => {
+            toast.classList.add('hidden');
+            window.print();
+          });
+      } else {
+        toast.classList.add('hidden');
+        window.print();
+      }
+    });
+
+    /**
+     * TOMBOL ULANGI TES
+     */
+    document.getElementById('btn-retry').addEventListener('click', () => {
+      appState.currentIndex = 0;
+      appState.answers = {};
+      appState.selectedDragChip = null;
+      renderQuestion();
+      switchView('quiz');
+    });
+  </script>
+</body>
+</html>
